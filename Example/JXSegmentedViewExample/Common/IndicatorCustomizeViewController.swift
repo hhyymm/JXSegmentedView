@@ -114,7 +114,16 @@ class IndicatorCustomizeViewController: UITableViewController {
             //配置指示器
             let indicator = JXSegmentedIndicatorBackgroundView()
             indicator.indicatorHeight = 30
+            indicator.scrollAnimationDuration = 0
             vc.segmentedView.indicators = [indicator]
+            
+            let inverIndicatorView = JXSegmentedIndicatorBackgroundView()
+            inverIndicatorView.indicatorHeight = 30
+            inverIndicatorView.indicatorColor = UIColor.yellow
+            
+            let inverIndicator = JXSegmentedInverIndicatorView()
+            inverIndicator.inverView = inverIndicatorView
+            vc.segmentedView.inverIndicator = inverIndicator
         case "BackgroundView椭圆形+阴影":
             //配置数据源
             let dataSource = JXSegmentedTitleDataSource()

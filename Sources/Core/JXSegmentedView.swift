@@ -166,6 +166,13 @@ open class JXSegmentedView: UIView {
             contentScrollView = listContainer?.contentScrollView()
         }
     }
+    
+    open var inverIndicator: JXSegmentedInverIndicatorView? = nil {
+        didSet {
+            collectionView.inverIndicator = inverIndicator!
+        }
+    }
+    
     /// indicators的元素必须是遵从JXSegmentedIndicatorProtocol协议的UIView及其子类
     open var indicators = [JXSegmentedIndicatorProtocol & UIView]() {
         didSet {
@@ -379,6 +386,18 @@ open class JXSegmentedView: UIView {
                 }
             }
         }
+        
+        let itemCount = itemDataSource.count
+        for index:Int in 0..<itemCount {
+            let indicatorParamsModel = JXSegmentedIndicatorParamsModel()
+            indicatorParamsModel.contentSize = CGSize(width: totalContentWidth, height: bounds.size.height)
+            indicatorParamsModel.currentSelectedIndex = index
+            let selectedItemFrame = getItemFrameAt(index: index)
+            indicatorParamsModel.currentSelectedItemFrame = selectedItemFrame
+            self.inverIndicator?.configWith(index, model: indicatorParamsModel)
+        }
+        self.inverIndicator?.reload()
+        
         collectionView.reloadData()
         collectionView.collectionViewLayout.invalidateLayout()
     }

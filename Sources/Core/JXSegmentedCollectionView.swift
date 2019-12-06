@@ -22,12 +22,27 @@ open class JXSegmentedCollectionView: UICollectionView {
             }
         }
     }
+    
+    open var inverIndicator: JXSegmentedInverIndicatorView?{
+        willSet {
+            inverIndicator?.removeFromSuperview()
+        }
+        didSet {
+            if let item = inverIndicator {
+                addSubview(item)
+            }
+        }
+    }
 
     open override func layoutSubviews() {
         super.layoutSubviews()
 
         for indicator in indicators {
             sendSubviewToBack(indicator)
+        }
+        
+        if let item = inverIndicator {
+            sendSubviewToBack(item)
         }
     }
 
